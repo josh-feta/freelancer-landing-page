@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Payme — Web Services Landing</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #1f2a37;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --primary: #0ea5b7; /* teal */
+        --primary2: #38bdf8; /* cyan */
+        --shadow: 0 18px 40px rgba(16, 24, 40, 0.08);
+        --shadow2: 0 10px 30px rgba(16, 24, 40, 0.1);
+        --radius: 18px;
+        --max: 1120px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.55;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      .container {
+        width: min(var(--max), calc(100% - 40px));
+        margin: 0 auto;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        padding: 0 16px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.2s transform, 0.2s box-shadow, 0.2s background,
+          0.2s border-color;
+        user-select: none;
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn-primary {
+        background: linear-gradient(90deg, var(--primary), var(--primary2));
+        color: white;
+        box-shadow: 0 10px 22px rgba(14, 165, 183, 0.25);
+      }
+      .btn-primary:hover {
+        box-shadow: 0 14px 28px rgba(14, 165, 183, 0.28);
+      }
+      .btn-ghost {
+        background: #fff;
+        border-color: var(--line);
+        color: var(--text);
+      }
+      .btn-ghost:hover {
+        border-color: #cbd5e1;
+        box-shadow: 0 10px 20px rgba(16, 24, 40, 0.06);
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 13px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(6px);
+      }
+      .section {
+        padding: 72px 0;
+      }
+      .section-title {
+        text-align: center;
+        max-width: 640px;
+        margin: 0 auto 32px;
+      }
+      .section-title h2 {
+        margin: 0;
+        font-size: 36px;
+        letter-spacing: -0.02em;
+      }
+      .section-title h2 span {
+        color: var(--primary);
+      }
+      .section-title p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* Decorative background doodles */
+      .bg-decor {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .dot {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: rgba(14, 165, 183, 0.25);
+        filter: saturate(120%);
+      }
+      .dot.yellow {
+        background: rgba(245, 158, 11, 0.35);
+      }
+      .dot.blue {
+        background: rgba(56, 189, 248, 0.3);
+      }
+      .dot.gray {
+        background: rgba(148, 163, 184, 0.35);
+      }
+      .line {
+        position: absolute;
+        width: 140px;
+        height: 140px;
+        border: 1px solid rgba(14, 165, 183, 0.28);
+        border-radius: 22px;
+        transform: rotate(14deg);
+      }
+
+      /* NAV */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(229, 231, 235, 0.65);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 68px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .brand .logo {
+        width: 34px;
+        height: 34px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        box-shadow: 0 12px 26px rgba(14, 165, 183, 0.25);
+      }
+      .navlinks {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .navlinks a {
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .navlinks a:hover {
+        color: var(--text);
+      }
+      .navactions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .menu-btn {
+        display: none;
+      }
+
+      /* HERO */
+      .hero {
+        position: relative;
+        padding: 58px 0 26px;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 30px;
+        align-items: center;
+      }
+      .hero h1 {
+        margin: 16px 0 10px;
+        font-size: 56px;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+      }
+      .hero h1 span {
+        color: var(--primary);
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        max-width: 520px;
+      }
+      .hero .cta {
+        margin-top: 22px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .hero-card {
+        position: relative;
+        border-radius: 28px;
+        padding: 26px;
+        background: radial-gradient(
+            1200px 400px at 20% 10%,
+            rgba(56, 189, 248, 0.18),
+            transparent 60%
+          ),
+          radial-gradient(
+            900px 460px at 80% 40%,
+            rgba(14, 165, 183, 0.14),
+            transparent 55%
+          ),
+          #fff;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(229, 231, 235, 0.9);
+        overflow: hidden;
+        min-height: 340px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-card .arch {
+        position: absolute;
+        inset: 16px 22px 16px 22px;
+        border-radius: 999px;
+        background: linear-gradient(
+          180deg,
+          rgba(14, 165, 183, 0.1),
+          rgba(56, 189, 248, 0.06)
+        );
+        border: 1px solid rgba(14, 165, 183, 0.18);
+      }
+      .hero-card .person {
+        position: relative;
+        z-index: 2;
+        width: min(320px, 80%);
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: var(--shadow2);
+        border: 1px solid rgba(229, 231, 235, 0.9);
+      }
+      .hero-card .person .ph {
+        aspect-ratio: 3/4;
+        background: radial-gradient(
+            60px 60px at 70% 30%,
+            rgba(56, 189, 248, 0.32),
+            transparent 60%
+          ),
+          radial-gradient(
+            120px 120px at 40% 60%,
+            rgba(14, 165, 183, 0.25),
+            transparent 60%
+          ),
+          linear-gradient(180deg, #f8fafc, #eef2ff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #475569;
+        font-weight: 700;
+      }
+      .hero-card .note {
+        position: absolute;
+        left: 18px;
+        bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 10px 12px;
+        box-shadow: 0 10px 18px rgba(16, 24, 40, 0.06);
+        z-index: 3;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .spark {
+        width: 34px;
+        height: 34px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          rgba(245, 158, 11, 0.95),
+          rgba(56, 189, 248, 0.9)
+        );
+      }
+
+      /* LOGOS */
+      .logos {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 34px;
+        flex-wrap: wrap;
+        padding: 16px 0 0;
+        color: #475569;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .logos span {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        opacity: 0.75;
+        font-size: 13px;
+        font-weight: 800;
+      }
+      .logos i {
+        width: 18px;
+        height: 18px;
+        border-radius: 6px;
+        background: linear-gradient(
+          135deg,
+          rgba(2, 132, 199, 0.25),
+          rgba(14, 165, 183, 0.2)
+        );
+        display: inline-block;
+      }
+
+      /* SERVICES */
+      .services-wrap {
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center;
+      }
+      .blob-grid {
+        width: min(760px, 100%);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        padding: 18px;
+        border-radius: 34px;
+        background: radial-gradient(
+            700px 260px at 50% 0%,
+            rgba(56, 189, 248, 0.15),
+            transparent 55%
+          ),
+          #fff;
+        border: 1px solid rgba(229, 231, 235, 0.95);
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+      }
+      .blob-grid::before {
+        content: "";
+        position: absolute;
+        inset: -40px;
+        border-radius: 48px;
+        background: radial-gradient(
+            220px 220px at 20% 20%,
+            rgba(14, 165, 183, 0.1),
+            transparent 60%
+          ),
+          radial-gradient(
+            240px 240px at 80% 80%,
+            rgba(56, 189, 248, 0.1),
+            transparent 60%
+          );
+        transform: rotate(-3deg);
+        pointer-events: none;
+      }
+      .service {
+        position: relative;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid rgba(229, 231, 235, 0.9);
+        box-shadow: 0 12px 22px rgba(16, 24, 40, 0.06);
+        background: #0b1220;
+        min-height: 170px;
+        display: flex;
+        align-items: flex-end;
+      }
+      .service .bg {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+            900px 340px at 20% 10%,
+            rgba(56, 189, 248, 0.25),
+            transparent 60%
+          ),
+          radial-gradient(
+            700px 260px at 80% 90%,
+            rgba(14, 165, 183, 0.22),
+            transparent 62%
+          ),
+          linear-gradient(135deg, #0b1220, #0f172a);
+        opacity: 1;
+      }
+      .service .label {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        padding: 14px 14px 12px;
+        color: #e5e7eb;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 10px;
+        background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.45));
+      }
+      .service h4 {
+        margin: 0;
+        font-size: 14px;
+        letter-spacing: -0.01em;
+      }
+      .stars {
+        display: flex;
+        gap: 2px;
+        opacity: 0.9;
+        font-size: 12px;
+      }
+      .stars span {
+        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.25));
+      }
+      .service:nth-child(2) .bg {
+        background: radial-gradient(
+            900px 340px at 80% 20%,
+            rgba(245, 158, 11, 0.18),
+            transparent 58%
+          ),
+          radial-gradient(
+            700px 260px at 10% 90%,
+            rgba(56, 189, 248, 0.22),
+            transparent 62%
+          ),
+          linear-gradient(135deg, #0b1220, #0f172a);
+      }
+      .service:nth-child(3) .bg {
+        background: radial-gradient(
+            900px 340px at 20% 20%,
+            rgba(34, 197, 94, 0.15),
+            transparent 58%
+          ),
+          radial-gradient(
+            700px 260px at 80% 90%,
+            rgba(56, 189, 248, 0.2),
+            transparent 62%
+          ),
+          linear-gradient(135deg, #0b1220, #0f172a);
+      }
+      .service:nth-child(4) .bg {
+        background: radial-gradient(
+            900px 340px at 70% 30%,
+            rgba(168, 85, 247, 0.16),
+            transparent 58%
+          ),
+          radial-gradient(
+            700px 260px at 20% 90%,
+            rgba(14, 165, 183, 0.2),
+            transparent 62%
+          ),
+          linear-gradient(135deg, #0b1220, #0f172a);
+      }
+      .center-btn {
+        display: flex;
+        justify-content: center;
+        margin-top: 18px;
+      }
+
+      /* FEATURES */
+      .features-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        align-items: stretch;
+        margin-top: 14px;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid rgba(229, 231, 235, 0.95);
+        border-radius: 18px;
+        padding: 18px 18px 16px;
+        box-shadow: 0 12px 26px rgba(16, 24, 40, 0.06);
+        transition: 0.2s transform, 0.2s box-shadow;
+      }
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 34px rgba(16, 24, 40, 0.08);
+      }
+      .card h4 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        letter-spacing: -0.01em;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .learn {
+        display: inline-block;
+        margin-top: 12px;
+        color: var(--primary);
+        font-weight: 700;
+        font-size: 13px;
+      }
+
+      /* TESTIMONIAL */
+      .testimonial {
+        max-width: 920px;
+        margin: 0 auto;
+        border: 1px solid rgba(229, 231, 235, 0.95);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        background: #fff;
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 0;
+      }
+      .t-left {
+        background: radial-gradient(
+            240px 240px at 30% 30%,
+            rgba(56, 189, 248, 0.22),
+            transparent 60%
+          ),
+          radial-gradient(
+            240px 240px at 70% 80%,
+            rgba(14, 165, 183, 0.16),
+            transparent 60%
+          ),
+          #f8fafc;
+        padding: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .avatar {
+        width: 220px;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid rgba(229, 231, 235, 0.95);
+        box-shadow: var(--shadow2);
+        background: #fff;
+      }
+      .avatar .ph {
+        aspect-ratio: 4/3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #475569;
+        font-weight: 800;
+        background: radial-gradient(
+            90px 90px at 25% 40%,
+            rgba(56, 189, 248, 0.25),
+            transparent 60%
+          ),
+          linear-gradient(180deg, #fff, #eef2ff);
+      }
+      .t-right {
+        padding: 26px 26px 18px;
+      }
+      .t-right h4 {
+        margin: 0 0 8px;
+        font-size: 16px;
+      }
+      .t-right p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        max-width: 520px;
+      }
+      .t-meta {
+        margin-top: 14px;
+        font-size: 13px;
+        color: #334155;
+      }
+      .t-meta strong {
+        display: block;
+      }
+      .dots {
+        display: flex;
+        gap: 8px;
+        margin-top: 14px;
+      }
+      .dotbtn {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        background: transparent;
+        cursor: pointer;
+      }
+      .dotbtn.active {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+
+      /* PRICING */
+      .pricing {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 18px;
+      }
+      .price {
+        border-radius: 18px;
+        border: 1px solid rgba(229, 231, 235, 0.95);
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 12px 26px rgba(16, 24, 40, 0.06);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .price.featured {
+        border-color: rgba(14, 165, 183, 0.35);
+        box-shadow: 0 18px 38px rgba(14, 165, 183, 0.14);
+        transform: translateY(-6px);
+      }
+      .price h4 {
+        margin: 0;
+        font-size: 14px;
+        color: #475569;
+      }
+      .price .amount {
+        font-size: 36px;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        margin: 2px 0 0;
+        color: var(--primary);
+      }
+      .price .amount small {
+        font-size: 14px;
+        color: #64748b;
+        font-weight: 700;
+      }
+      .list {
+        margin: 0;
+        padding: 0 0 0 16px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .list li {
+        margin: 6px 0;
+      }
+      .price .btn {
+        width: 100%;
+      }
+      .muted {
+        color: var(--muted);
+      }
+
+      /* FAQ */
+      .faq {
+        max-width: 820px;
+        margin: 0 auto;
+        border-radius: 18px;
+        border: 1px solid rgba(229, 231, 235, 0.95);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        background: #fff;
+      }
+      details {
+        border-top: 1px solid rgba(229, 231, 235, 0.95);
+        padding: 0 18px;
+      }
+      details:first-child {
+        border-top: 0;
+      }
+      summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 16px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        font-weight: 800;
+        font-size: 14px;
+        color: #334155;
+      }
+      summary::-webkit-details-marker {
+        display: none;
+      }
+      .plus {
+        width: 28px;
+        height: 28px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #64748b;
+        font-weight: 900;
+        flex: 0 0 auto;
+      }
+      details[open] .plus {
+        background: rgba(14, 165, 183, 0.1);
+        border-color: rgba(14, 165, 183, 0.25);
+        color: var(--primary);
+      }
+      .faq p {
+        margin: 0 0 16px;
+        color: var(--muted);
+        font-size: 13px;
+        max-width: 680px;
+      }
+
+      /* CTA + FOOTER */
+      .cta-band {
+        background: #0b1220;
+        color: #e5e7eb;
+        padding: 56px 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .cta-band::before {
+        content: "";
+        position: absolute;
+        inset: -120px;
+        background: radial-gradient(
+            340px 340px at 20% 40%,
+            rgba(56, 189, 248, 0.18),
+            transparent 60%
+          ),
+          radial-gradient(
+            360px 360px at 80% 60%,
+            rgba(14, 165, 183, 0.16),
+            transparent 60%
+          );
+        pointer-events: none;
+      }
+      .cta-inner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 14px;
+      }
+      .cta-inner h2 {
+        margin: 0;
+        font-size: 34px;
+        letter-spacing: -0.02em;
+      }
+      .cta-inner p {
+        margin: 0;
+        color: #cbd5e1;
+        font-size: 14px;
+        max-width: 620px;
+      }
+      footer {
+        background: #0b1220;
+        color: #cbd5e1;
+        border-top: 1px solid rgba(148, 163, 184, 0.12);
+        padding: 22px 0 34px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
+        gap: 18px;
+        align-items: start;
+        margin-top: 18px;
+      }
+      .footer-grid h5 {
+        margin: 0 0 10px;
+        color: #e5e7eb;
+        font-size: 13px;
+      }
+      .footer-grid a {
+        display: block;
+        color: #cbd5e1;
+        opacity: 0.85;
+        font-size: 13px;
+        margin: 8px 0;
+      }
+      .footer-grid a:hover {
+        opacity: 1;
+      }
+      .small {
+        font-size: 12px;
+        opacity: 0.75;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 960px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+        .hero h1 {
+          font-size: 44px;
+        }
+        .testimonial {
+          grid-template-columns: 1fr;
+        }
+        .t-left {
+          padding: 18px;
+        }
+        .features-row {
+          grid-template-columns: 1fr;
+        }
+        .pricing {
+          grid-template-columns: 1fr;
+        }
+        .price.featured {
+          transform: none;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 720px) {
+        .navlinks {
+          display: none;
+        }
+        .menu-btn {
+          display: inline-flex;
+        }
+        .hero {
+          padding-top: 34px;
+        }
+        .hero h1 {
+          font-size: 40px;
+        }
+        .blob-grid {
+          grid-template-columns: 1fr;
+        }
+        .section {
+          padding: 58px 0;
+        }
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="brand" href="#">
+          <span class="logo" aria-hidden="true"></span>
+          <span>Payme</span>
+        </a>
+
+        <nav class="navlinks" aria-label="Primary">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#testimonials">Testimonial</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="navactions">
+          <a class="btn btn-ghost" href="#signin">Sign in</a>
+          <a class="btn btn-primary" href="#signup">Sign up</a>
+          <button
+            class="btn btn-ghost menu-btn"
+            type="button"
+            id="menuBtn"
+            aria-expanded="false"
+            aria-controls="mobileNav"
+          >
+            Menu
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile nav (simple) -->
+      <div
+        id="mobileNav"
+        style="display: none; border-top: 1px solid rgba(229, 231, 235, 0.65)"
+      >
+        <div
+          class="container"
+          style="
+            padding: 12px 0 16px;
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+          "
+        >
+          <a class="pill" href="#home">Home</a>
+          <a class="pill" href="#about">About</a>
+          <a class="pill" href="#services">Services</a>
+          <a class="pill" href="#testimonials">Testimonial</a>
+          <a class="pill" href="#contact">Contact</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="home">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="bg-decor" aria-hidden="true">
+          <span class="dot yellow" style="top: 34px; left: 48%"></span>
+          <span
+            class="dot gray"
+            style="top: 160px; left: 14%; width: 10px; height: 10px"
+          ></span>
+          <span
+            class="dot blue"
+            style="top: 120px; right: 14%; width: 12px; height: 12px"
+          ></span>
+          <span class="line" style="bottom: 40px; left: -40px"></span>
+          <span
+            class="line"
+            style="top: 120px; right: -50px; transform: rotate(-10deg)"
+          ></span>
+        </div>
+
+        <div class="container hero-grid">
+          <div>
+            <div class="pill">
+              <span
+                aria-hidden="true"
+                style="
+                  width: 10px;
+                  height: 10px;
+                  border-radius: 50%;
+                  background: var(--primary);
+                "
+              ></span>
+              Modern website services
+            </div>
+
+            <h1>Providing Best <span>WEB Services</span></h1>
+            <p>
+              Launch a clean, modern website with service cards, testimonials,
+              pricing, and FAQs—perfect for agencies, freelancers, and startups.
+            </p>
+
+            <div class="cta">
+              <a class="btn btn-primary" href="#services">Get Started</a>
+              <a class="btn btn-ghost" href="#about">Explore</a>
+            </div>
+          </div>
+
+          <div class="hero-card" aria-label="Hero image card">
+            <div class="arch" aria-hidden="true"></div>
+
+            <!-- Replace this placeholder with a real image if you want:
+               <img class="person" src="your-image.jpg" alt="Smiling person" />
+          -->
+            <div
+              class="person"
+              role="img"
+              aria-label="Smiling person placeholder"
+            >
+              <div class="ph">Hero Image</div>
+            </div>
+
+            <div class="note">
+              <span class="spark" aria-hidden="true"></span>
+              <span
+                ><strong style="color: #111827">Fast setup</strong
+                ><br />Responsive sections included</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="logos" aria-label="Partner logos">
+            <span><i aria-hidden="true"></i> Planday</span>
+            <span><i aria-hidden="true"></i> umbraco</span>
+            <span><i aria-hidden="true"></i> Pearlfisher.</span>
+            <span><i aria-hidden="true"></i> Brightpearl</span>
+            <span><i aria-hidden="true"></i> Planday</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICES -->
+      <section class="section" id="services">
+        <div class="container">
+          <div class="section-title">
+            <h2>Best <span>Services</span></h2>
+            <p>Four core offerings that match the layout in your screenshot.</p>
+          </div>
+
+          <div class="services-wrap">
+            <div class="blob-grid">
+              <div class="service">
+                <div class="bg" aria-hidden="true"></div>
+                <div class="label">
+                  <div>
+                    <h4>Web Development</h4>
+                    <div class="stars" aria-label="5 out of 5 stars">
+                      <span>★</span><span>★</span><span>★</span><span>★</span
+                      ><span>★</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="service">
+                <div class="bg" aria-hidden="true"></div>
+                <div class="label">
+                  <div>
+                    <h4>Web Designing</h4>
+                    <div class="stars" aria-label="5 out of 5 stars">
+                      <span>★</span><span>★</span><span>★</span><span>★</span
+                      ><span>★</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="service">
+                <div class="bg" aria-hidden="true"></div>
+                <div class="label">
+                  <div>
+                    <h4>Database Management</h4>
+                    <div class="stars" aria-label="5 out of 5 stars">
+                      <span>★</span><span>★</span><span>★</span><span>★</span
+                      ><span>★</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="service">
+                <div class="bg" aria-hidden="true"></div>
+                <div class="label">
+                  <div>
+                    <h4>SEO</h4>
+                    <div class="stars" aria-label="5 out of 5 stars">
+                      <span>★</span><span>★</span><span>★</span><span>★</span
+                      ><span>★</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="center-btn">
+              <a class="btn btn-ghost" href="#features">Explore All</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES -->
+      <section class="section" id="features">
+        <div class="container">
+          <div class="section-title">
+            <h2>Our <span>Features</span></h2>
+            <p>Three simple feature cards, centered, with soft shadows.</p>
+          </div>
+
+          <div class="features-row">
+            <article class="card">
+              <h4>Work Load</h4>
+              <p>
+                Track project tasks and deliverables with a clean dashboard and
+                simple progress indicators.
+              </p>
+              <a class="learn" href="#contact">Learn More</a>
+            </article>
+
+            <article class="card">
+              <h4>Time Tracking</h4>
+              <p>
+                Collect time logs per project. Export reports, visualize trends,
+                and keep teams aligned.
+              </p>
+              <a class="learn" href="#contact">Learn More</a>
+            </article>
+
+            <article class="card">
+              <h4>Collaboration</h4>
+              <p>
+                Share files, comments, and updates in one place so everyone
+                stays in sync.
+              </p>
+              <a class="learn" href="#contact">Learn More</a>
+            </article>
+          </div>
+
+          <div class="center-btn" style="margin-top: 16px">
+            <a class="btn btn-ghost" href="#testimonials">Explore All</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIAL -->
+      <section class="section" id="testimonials">
+        <div class="container">
+          <div class="section-title">
+            <h2>What <span>Clients</span> Say</h2>
+            <p>
+              A simple testimonial slider (static content + clickable dots).
+            </p>
+          </div>
+
+          <div class="testimonial" role="region" aria-label="Testimonials">
+            <div class="t-left">
+              <div class="avatar" aria-hidden="true">
+                <div class="ph">Client Photo</div>
+              </div>
+            </div>
+
+            <div class="t-right">
+              <h4 id="tTitle">Best Developers</h4>
+              <p id="tText">
+                Our website became faster, cleaner, and easier to maintain. The
+                team communicated clearly and delivered on time.
+              </p>
+
+              <div class="t-meta">
+                <strong id="tName">Robert Jowen</strong>
+                <span class="muted" id="tRole">Director of Finance</span>
+              </div>
+
+              <div class="dots" aria-label="Testimonial navigation">
+                <button
+                  class="dotbtn active"
+                  type="button"
+                  data-i="0"
+                  aria-label="Testimonial 1"
+                ></button>
+                <button
+                  class="dotbtn"
+                  type="button"
+                  data-i="1"
+                  aria-label="Testimonial 2"
+                ></button>
+                <button
+                  class="dotbtn"
+                  type="button"
+                  data-i="2"
+                  aria-label="Testimonial 3"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRICING -->
+      <section class="section" id="pricing">
+        <div class="container">
+          <div class="section-title">
+            <h2>Our <span>Pricing Plan</span></h2>
+            <p>Three pricing tiers with a highlighted middle plan.</p>
+          </div>
+
+          <div class="pricing">
+            <div class="price">
+              <h4>For Starter</h4>
+              <div class="amount">$59 <small>/mo</small></div>
+              <ul class="list">
+                <li>Feedback categorization</li>
+                <li>One-to-one revision</li>
+                <li>Basic SEO</li>
+                <li>Production-ready sections</li>
+                <li>Email support</li>
+              </ul>
+              <a class="btn btn-ghost" href="#contact">Request Demo</a>
+            </div>
+
+            <div class="price featured">
+              <h4>For Teams</h4>
+              <div class="amount">$99 <small>/mo</small></div>
+              <ul class="list">
+                <li>Feedback categorization</li>
+                <li>Advanced revision</li>
+                <li>Full SEO optimization</li>
+                <li>Performance tweaks</li>
+                <li>Extended dashboard widgets</li>
+              </ul>
+              <a class="btn btn-primary" href="#contact">Payment Demo</a>
+            </div>
+
+            <div class="price">
+              <h4>For Company</h4>
+              <div class="amount">Custom</div>
+              <ul class="list">
+                <li>Feedback categorization</li>
+                <li>Enterprise integrations</li>
+                <li>Dedicated account manager</li>
+                <li>Custom roadmap</li>
+                <li>Priority support</li>
+              </ul>
+              <a class="btn btn-ghost" href="#contact">Contact Us</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section" id="about">
+        <div class="container">
+          <div class="section-title">
+            <h2><span>FAQs</span></h2>
+            <p>Expandable accordion items similar to your design.</p>
+          </div>
+
+          <div
+            class="faq"
+            role="region"
+            aria-label="Frequently asked questions"
+          >
+            <details open>
+              <summary>
+                How fast can you build a landing page like this?
+                <span class="plus">–</span>
+              </summary>
+              <p>
+                A first version can be assembled quickly once you have copy +
+                images. This template is ready to customize.
+              </p>
+            </details>
+
+            <details>
+              <summary>
+                Can I replace images and text?
+                <span class="plus">+</span>
+              </summary>
+              <p>
+                Yes—swap the placeholder blocks with real images, update
+                headings, and adjust colors in the CSS variables.
+              </p>
+            </details>
+
+            <details>
+              <summary>
+                Is it mobile responsive?
+                <span class="plus">+</span>
+              </summary>
+              <p>
+                The layout switches to one-column sections under 960px and
+                collapses the navigation under 720px.
+              </p>
+            </details>
+
+            <details>
+              <summary>
+                Can you convert this into React / Next.js?
+                <span class="plus">+</span>
+              </summary>
+              <p>
+                Yep—this structure maps cleanly to components (Navbar, Hero,
+                Services, Features, Testimonial, Pricing, FAQ, Footer).
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- DARK CTA BAND -->
+      <section class="cta-band" id="contact">
+        <div class="container cta-inner">
+          <h2>People who are ready took these courses!</h2>
+          <p>
+            Use this section as a final call-to-action (newsletter, signup, or
+            schedule a demo).
+          </p>
+          <a
+            class="btn btn-ghost"
+            href="#signup"
+            style="
+              border-color: rgba(203, 213, 225, 0.25);
+              color: #e5e7eb;
+              background: transparent;
+            "
+          >
+            Schedule a Demo
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="brand" style="margin-bottom: 10px">
+              <span class="logo" aria-hidden="true"></span>
+              <span style="color: #e5e7eb">Payme</span>
+            </div>
+            <div class="small">© 2026 Payme. All rights reserved.</div>
+          </div>
+
+          <div>
+            <h5>Links</h5>
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#about">FAQs</a>
+          </div>
+
+          <div>
+            <h5>Company</h5>
+            <a href="#about">About</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
+          </div>
+
+          <div>
+            <h5>Get in touch</h5>
+            <a href="mailto:hello@example.com">hello@example.com</a>
+            <a href="tel:+10000000000">+1 (000) 000-0000</a>
+            <div class="small" style="margin-top: 10px">
+              Mon–Fri, 9:00–18:00
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileNav = document.getElementById("mobileNav");
+      menuBtn?.addEventListener("click", () => {
+        const isOpen = mobileNav.style.display === "block";
+        mobileNav.style.display = isOpen ? "none" : "block";
+        menuBtn.setAttribute("aria-expanded", String(!isOpen));
+      });
+
+      // Testimonial dots
+      const testimonials = [
+        {
+          title: "Best Developers",
+          text: "Our website became faster, cleaner, and easier to maintain. The team communicated clearly and delivered on time.",
+          name: "Robert Jowen",
+          role: "Director of Finance",
+        },
+        {
+          title: "Amazing Support",
+          text: "Quick updates, thoughtful design choices, and a smooth launch. Everything felt organized from day one.",
+          name: "Ava Chen",
+          role: "Product Manager",
+        },
+        {
+          title: "Great Results",
+          text: "We saw improved SEO and better engagement after the redesign. The layout is modern and easy to customize.",
+          name: "Noah Smith",
+          role: "Marketing Lead",
+        },
+      ];
+
+      const tTitle = document.getElementById("tTitle");
+      const tText = document.getElementById("tText");
+      const tName = document.getElementById("tName");
+      const tRole = document.getElementById("tRole");
+      const dotBtns = Array.from(document.querySelectorAll(".dotbtn"));
+
+      function setTestimonial(i) {
+        const t = testimonials[i];
+        tTitle.textContent = t.title;
+        tText.textContent = t.text;
+        tName.textContent = t.name;
+        tRole.textContent = t.role;
+        dotBtns.forEach((b) => b.classList.remove("active"));
+        dotBtns[i]?.classList.add("active");
+      }
+
+      dotBtns.forEach((btn) => {
+        btn.addEventListener("click", () =>
+          setTestimonial(Number(btn.dataset.i))
+        );
+      });
+
+      // FAQ plus/minus
+      document.querySelectorAll("details").forEach((d) => {
+        d.addEventListener("toggle", () => {
+          const plus = d.querySelector(".plus");
+          if (!plus) return;
+          plus.textContent = d.open ? "–" : "+";
+        });
+      });
+    </script>
+  </body>
+</html>
