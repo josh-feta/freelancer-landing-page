@@ -1,7 +1,62 @@
 /* primary color: 25A4AD */
+/* text color: 313131 */
+:root {
+  --primary-color: #25a4ad;
+  --text-color: #313131;
+  --background-color: #ffffff;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background-color: var(--background-color);
+
+  height: 68px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.nav {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  justify-content: start;
+  align-items: center;
+  list-style-type: none;
+  /* flex-direction: column; */
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.auth-links {
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: 1.5px solid var(--primary-color);
+  cursor: pointer;
+}
+
+.signup {
+  color: var(--primary-color);
+  background-color: var(--background-color);
+}
 
 h1 {
-  color: red;
+  color: var(--primary-color);
 }
 p {
   background-color: yellow;
