@@ -70,10 +70,6 @@ h1 {
   padding: 48px 0;
 }
 
-p{
-  text-align: center;
-}
-
 .service-items {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -226,6 +222,136 @@ p{
 }
 .features-footer button:focus {
   outline: none;
+}
+
+.pricing_plan {
+  margin: 0 auto;
+  width: 900px;
+  text-align: center;
+}
+
+.pricing_plan h2 {
+  font-size: 40px;
+  font-weight: 300;
+}
+
+.pricing_plan h2 span {
+  color: #1bb3b3;
+  font-weight: 600;
+}
+
+.pricing-plans {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 48px 1fr 48px;
+  justify-content: center;
+  column-gap: 40px;
+  padding: 60px 0;
+}
+
+.item_1 {
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 2;
+}
+.item_2 {
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 2;
+}
+
+.item_3 {
+  grid-column: 3 / span 1;
+  grid-row: 2 / span 2;
+}
+
+.pricing-plans_item {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  padding: 40px 30px;
+  text-align: center;
+  width: 364px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 48px;
+}
+
+.item_2 {
+  border: none !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.item_2 h3,
+.item_2 p {
+  color: var(--primary-color);
+}
+
+.item_2 li {
+  color: var(--primary-color);
+}
+
+.item_2 a {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border-color: var(--primary-color);
+}
+
+.item_2 a:hover {
+  background-color: #1e8a92;
+}
+
+.pricing-plans_item h3 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.pricing-plans_item p {
+  font-size: 48px;
+  font-weight: bolder;
+  margin: 0;
+}
+
+.pricing-list {
+  list-style: none;
+  padding-left: 0;
+  text-align: left;
+  margin: 0;
+}
+
+.pricing-list li::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url("images/checkmark.svg");
+  background-repeat: no-repeat;
+  margin-right: 8px;
+}
+
+.item_2 .pricing-list li::before {
+  filter: invert(56%) sepia(72%) saturate(447%) hue-rotate(130deg)
+    brightness(91%) contrast(88%);
+}
+
+.pricing-plans_item a {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 32px;
+  background-color: transparent;
+  color: var(--primary-color);
+  text-decoration: none;
+  border: 1px solid var(--primary-color);
+  border-radius: 1px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.pricing-plans_item a:hover {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 164, 173, 0.3);
 }
 
 footer {
