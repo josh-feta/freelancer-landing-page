@@ -161,6 +161,74 @@
         </div>
       </section>
 
+      <!-- TESTIMONIALS -->
+      <section class="testimonials-section">
+        <div class="testimonials-container">
+          <h2>What <span>Clients</span> Say</h2>
+          <p class="testimonials-subtitle">
+            Letter of on become he tended active enable to. Vicinity relation
+            sensible sociable surprise screened no up as.
+          </p>
+
+          <div class="testimonial">
+            <div class="testimonial-left">
+              <div class="testimonial-avatar">
+                <div class="avatar-placeholder">Client Photo</div>
+              </div>
+            </div>
+
+            <div class="testimonial-right">
+              <h4 id="tTitle">Best Developers</h4>
+              <p id="tText">
+                Our website became faster, cleaner, and easier to maintain. The
+                team communicated clearly and delivered on time.
+              </p>
+
+              <div class="testimonial-meta">
+                <strong id="tName">Robert Johnson</strong>
+                <span class="muted" id="tRole">Director of Finance</span>
+              </div>
+
+              <div class="testimonial-dots">
+                <button
+                  class="dotbtn active"
+                  type="button"
+                  data-i="0"
+                  aria-label="Testimonial 1"
+                ></button>
+                <button
+                  class="dotbtn"
+                  type="button"
+                  data-i="1"
+                  aria-label="Testimonial 2"
+                ></button>
+                <button
+                  class="dotbtn"
+                  type="button"
+                  data-i="2"
+                  aria-label="Testimonial 3"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA SECTION -->
+      <section class="cta-section">
+        <div class="cta-container">
+          <h2>Ready to Transform Your Business?</h2>
+          <p>
+            Join hundreds of satisfied clients who have grown their business
+            with our services.
+          </p>
+          <div class="cta-buttons">
+            <a class="cta-btn primary" href="#">Get Started Today</a>
+            <a class="cta-btn secondary" href="#">Learn More</a>
+          </div>
+        </div>
+      </section>
+
       <section class="pricing_plan">
         <h2>Our <span>Pricing Plan</span></h2>
         <div class="pricing-plans">
@@ -199,6 +267,74 @@
               <li>Essential dev tools integration</li>
             </ul>
             <a href="#">Request Demo</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQs SECTION -->
+      <section class="faq-section">
+        <div class="faq-container">
+          <h2>FAQs</h2>
+
+          <div class="faq-item">
+            <button class="faq-header" aria-expanded="true">
+              <span class="faq-icon">−</span>
+              <span
+                >she met humoured sir breeding her. Six curiosity day assurance
+                bed necessary.</span
+              >
+            </button>
+            <div class="faq-content active">
+              <p>
+                Relation so in confined smallest children unpacked delicate. Why
+                sir end believe uncivil respect. Always get odious nature day
+                course for common. My little garret repair to desire he esteem.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-header" aria-expanded="false">
+              <span class="faq-icon">+</span>
+              <span
+                >And excellence partiality estimating terminated day
+                everything?</span
+              >
+            </button>
+            <div class="faq-content">
+              <p>
+                Content for this question goes here. This section expands when
+                clicked.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-header" aria-expanded="false">
+              <span class="faq-icon">+</span>
+              <span>Latter person am secure of estate genius at?</span>
+            </button>
+            <div class="faq-content">
+              <p>
+                Content for this question goes here. This section expands when
+                clicked.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-header" aria-expanded="false">
+              <span class="faq-icon">+</span>
+              <span
+                >Whatever landlord yourself at by pleasure of children be?</span
+              >
+            </button>
+            <div class="faq-content">
+              <p>
+                Content for this question goes here. This section expands when
+                clicked.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -247,5 +383,44 @@
         </div>
       </footer>
     </main>
+    <script>
+      // FAQ Accordion functionality
+      const faqHeaders = document.querySelectorAll(".faq-header");
+
+      faqHeaders.forEach((header) => {
+        header.addEventListener("click", function () {
+          const faqItem = this.parentElement;
+          const content = faqItem.querySelector(".faq-content");
+          const icon = this.querySelector(".faq-icon");
+          const isActive = content.classList.contains("active");
+
+          // Close all other items
+          document
+            .querySelectorAll(".faq-content.active")
+            .forEach((activeContent) => {
+              if (activeContent !== content) {
+                activeContent.classList.remove("active");
+                activeContent.parentElement
+                  .querySelector(".faq-header")
+                  .setAttribute("aria-expanded", "false");
+                activeContent.parentElement.querySelector(
+                  ".faq-icon",
+                ).textContent = "+";
+              }
+            });
+
+          // Toggle current item
+          if (isActive) {
+            content.classList.remove("active");
+            this.setAttribute("aria-expanded", "false");
+            icon.textContent = "+";
+          } else {
+            content.classList.add("active");
+            this.setAttribute("aria-expanded", "true");
+            icon.textContent = "−";
+          }
+        });
+      });
+    </script>
   </body>
 </html>
